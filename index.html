@@ -154,14 +154,35 @@
     font-weight: 500;
   }
   @media (max-width: 900px) {
+    html, body {
+      height: auto;
+      overflow: auto;
+    }
+    #intro-page {
+      position: relative;
+      height: auto;
+      min-height: 100vh;
+      overflow: visible;
+      padding: 20px 16px 60px;
+      align-items: flex-start;
+    }
     .intro-content {
       flex-direction: column;
       align-items: center;
-      gap: 28px;
+      gap: 24px;
+      width: 100%;
     }
     .portrait {
-      width: 220px;
-      height: 300px;
+      width: 200px;
+      height: 270px;
+    }
+    #rk-player {
+      width: 100% !important;
+      max-width: 320px;
+    }
+    .bio-wrap {
+      max-width: 100%;
+      width: 100%;
     }
   }
 </style>
