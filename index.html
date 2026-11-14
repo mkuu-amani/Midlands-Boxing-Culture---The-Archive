@@ -233,5 +233,47 @@ function showIntro() {
 document.getElementById('begin-btn').addEventListener('click', showIntro);
 </script>
 <script type="text/javascript" src="https://player.radioking.io/scripts/iframe.bundle.js"></script>
+
+<script>
+(function() {
+  const audio = document.getElementById('rk-audio');
+  const playBtn = document.getElementById('rk-play');
+  const vol = document.getElementById('rk-vol');
+  const artistEl = document.getElementById('rk-artist');
+  const titleEl = document.getElementById('rk-title');
+
+  // Radioking stream (update if needed from your Radio Manager → Share → Listening link)
+  audio.src = 'https://listen.radioking.com/radio/443393/stream/497783';
+  audio.volume = 0.7;
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().then(() => { playBtn.textContent = '❚❚'; }).catch(() => {});
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶';
+    }
+  });
+
+  vol.addEventListener('input', () => {
+    audio.volume = vol.value / 100;
+  });
+
+  async function updateNowPlaying() {
+    try {
+      const r = await fetch('https://api.radioking.io/widget/radio/the-channel-x/track/current');
+      const d = await r.json();
+      artistEl.textContent = d.artist || 'PRODIGAL SUN RADIO';
+      titleEl.textContent = d.title || 'Live';
+    } catch (e) {
+      artistEl.textContent = 'PRODIGAL SUN RADIO';
+      titleEl.textContent = 'Live';
+    }
+  }
+  updateNowPlaying();
+  setInterval(updateNowPlaying, 20000);
+})();
+</script>
+
 </body>
 </html>
